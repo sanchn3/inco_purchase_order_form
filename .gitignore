@@ -4,6 +4,7 @@ Logs
 backend/data/
 
 #Files
+backend\system_activity.log
 .env
 .vscode/
 Tools\__pycache__
