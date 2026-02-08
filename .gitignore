@@ -1,6 +1,7 @@
 #Folders
 venv/
 Logs
+backend/data/
 
 #Files
 .env
