@@ -1,0 +1,8 @@
+#Folders
+venv/
+Logs
+
+#Files
+.env
+.vscode/
+Tools\__pycache__
