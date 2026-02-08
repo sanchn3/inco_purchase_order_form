@@ -1,7 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import logging
+from datetime import datetime
 import csv
 import os
+
+logging.basicConfig(
+    filename='backend/system_activity.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 app = Flask(__name__)
 CORS(app) # This allows your frontend to communicate with this backend
@@ -34,10 +42,12 @@ def handle_form():
         data = request.json
         save_to_csv(data) # Save the data!
         
-        print(f"Success! Entry saved for: {data.get('name')}")
+        logging.info(f"ENTRY SAVED: Name: {data.get('name')}, Company: {data.get('company')}")
+        #print(f"Success! Entry saved for: {data.get('name')}")
         return jsonify({"status": "success", "message": "Thank you, Sign in Complete!"}), 200
     except Exception as e:
-        print(f"Error saving data: {e}")
+        logging.error(f"SYSTEM ERROR: {str(e)}")
+        #print(f"Error saving data: {e}")
         return jsonify({"status": "error", "message": "Server error"}), 500
 
 
