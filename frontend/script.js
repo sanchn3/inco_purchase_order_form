@@ -22,28 +22,47 @@ window.onload = function() {
 form.addEventListener('submit', function (e) {
   e.preventDefault();
 
+  // 1. Identify the form
+    const formType = form.getAttribute('data-form-type');
+    const getVal = (id) => document.getElementById(id)?.value || "";
+    
+    let formData = {};
 
   console.log(document.getElementById('name'));
   const result = document.getElementById('result');
   const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
-  const phoneInput = document.getElementById('phone_number').value;
-   if (!phoneRegex.test(phoneInput)) {
-    result.innerHTML = `<p style="color: red;">Error: Phone number must be exactly 10 digits (no dashes or spaces).</p>`;
+  
+  
+  // --- FORM 1: PICKUP ---
+    if (formType === 'pickup') {
+      const phoneInput = document.getElementById('phone_number').value;
+    if (!phoneRegex.test(phoneInput)) {
+      result.innerHTML = `<p style="color: red;">Error: Phone number must be exactly 10 digits (no dashes or spaces).</p>`;
     return; // Stops the function here so it doesn't send to Python
   }
-  
+        formData = {
+            form_type: 'pickup',
+            date: getVal('date'),
+            driver_name: getVal('name'),
+            phone: getVal('phone_number'),
+            truck_id: getVal('truck_temp'), // or whatever your ID is
+            po_number: getVal('purchase_order'),
+            cleanliness: document.querySelector('input[name="cleanliness"]:checked')?.value || "N/A",
+            time: getVal('current-time')
+        };
+    }
 
-  
-  const formData = {
-    date: document.getElementById('date').value,
-    name: document.getElementById('name').value,
-    phone: document.getElementById('phone_number').value,
-    company: document.getElementById('company').value,
-    po: document.getElementById('purchase_order').value,
-    temp: document.getElementById('truck_temp').value,
-    cleanliness: document.querySelector('input[name="cleanliness"]:checked').value,
-    time: document.getElementById('current-time').value
-  };
+    // --- FORM 2: VISITOR ---
+    else if (formType === 'visitor') {
+        formData = {
+            form_type: 'visitor',
+            visitor_name: getVal('name'),
+            company: getVal('company'),
+            host_person: getVal('person_to_visit'),
+            entry_time: getVal('time-in'),
+            exit_time: getVal('time-out')
+        };
+    }
 
   // Note the port change to 5000 for Python/Flask
   fetch('http://127.0.0.1:5000/submit', {
@@ -56,8 +75,8 @@ form.addEventListener('submit', function (e) {
     result.innerHTML = `<p style="color: green;">${data.message}</p>`;
     form.reset();
   setTimeout(function() {
-            result.innerHTML = ""; // This makes the text vanish
-        }, 20000); // 20000ms = 20 seconds
+            window.location.href = 'landing.html'; // This makes the text vanish
+        }, 3000); // 20000ms = 20 seconds
 
   })
   .catch(error => {
