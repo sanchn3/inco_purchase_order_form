@@ -7,30 +7,31 @@
     <link rel="stylesheet" href="style_sheet.css">
 </head>
 <body>
+  <a href="landing.html" style="text-decoration: none; color: #666;">⬅ Back to Start</a>
   <div class="form-container">
     <h2>Registration</h2>
     <form id="simpleForm">
 
 
-    <label for="date">Date</label>
+    <label for="date">Date / Fecha  📅</label>
       <input type="date" id="date" name="date" required />
 
-      <label for="name">Name</label>
+      <label for="name">Name / Nombre</label>
       <input type="text" id="name" required />
 
-    <label for="phone_number">Cell Phone Number</label>
+    <label for="phone_number">Cell Phone Number / Numero de Celular 📱 </label>
       <input type="tel" id="phone_number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="12" placeholder="123-456-7890" required />
 
-        <label for="company">Company</label>
+        <label for="company">Company / Compañia</label>
       <input type="text" id="company" required />
 
-      <label for="Purchase_Order">Purchase Order</label>
+      <label for="Purchase_Order">Purchase Order / Orden de Compra</label>
       <input type="text" id="purchase_order" required />
 
-    <label for="truck_temp">Truck Temperature (°F)</label>
+    <label for="truck_temp">Truck Temperature (°F) / Temperatura del Trailer (°F) 🌡️</label>
       <input type="number" id="truck_temp" required />
 
-    <label>Cleanliness</label>
+    <label>Cleanliness / Limpieza 🧹</label>
 
 <div class="radio-inline">
   <label>
@@ -44,7 +45,7 @@
   </label>
 </div>
 
-    <label for="current-time">Current Time</label>
+    <label for="current-time">Current Time / Hora Actual ⏱️</label>
 <input type="time" id="current-time" name="current-time" required />
 
       <button type="submit">Submit</button>
