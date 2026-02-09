@@ -35,6 +35,7 @@ A bilingual (English/Spanish) digital kiosk system designed for warehouse and of
     └── data/               # Generated CSV storage
         ├── pickup.csv      # Log: PO, Temp, Cleanliness, Driver Name
         └── delivery.csv    # Log: Company, Reason, Visitor Name
+```
 
 ## 🛠 Features & Restrictions
 * **Auto-Date/Time:** The form automatically detects today's date on load.
