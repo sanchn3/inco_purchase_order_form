@@ -33,15 +33,15 @@ A bilingual (English/Spanish) digital kiosk system designed for warehouse and of
 ├── script.js               # Unified Frontend Logic (Data collection & Fetch)
 └── backend/
     └── data/               # Generated CSV storage
-        ├── pickup.csv      # Log: PO, Temp, Cleanliness, Driver Name
-        └── delivery.csv    # Log: Company, Reason, Visitor Name
+        ├── pickup.csv      # Log: Date, Truck Driver Name, Cell Phone Number, Company, PO, Temp, Cleanliness, Time
+        └── delivery.csv    # Log: Date, Visitor Name, Company, Reason, Time in, Time out
 ```
 
 ## 🛠 Features & Restrictions
 * **Auto-Date/Time:** The form automatically detects today's date on load.
 * **Phone Formatting:** Restricts input to `123-456-7890` format.
 * **Data Integrity:** Prevents submission if the phone number is incorrect or required fields are missing.
-* **Self-Cleaning:** The "Thank You" message disappears after 20 seconds to prepare for the next user.
+* **Self-Cleaning:** The "Thank You" message appears but after 3 seconds the system resets to the landing page to prepare for the next user.
 
 ## ⚠️ Important Notes
 * **Excel Lock:** Do NOT keep `delivery.csv` nor `pickup.csv` open in Excel while a driver is trying to sign in. Excel will lock the file, and the Python server will be unable to save the data.
