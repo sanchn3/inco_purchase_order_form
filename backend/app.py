@@ -14,15 +14,20 @@ logging.basicConfig(
 app = Flask(__name__)
 CORS(app) # This allows your frontend to communicate with this backend
 
-CSV_FILE = 'backend/data/submissions.csv'
-
 def save_to_csv(data):
+
+    if data.get('form_type') == 'pickup':
+        CSV_FILE = 'backend/data/pickup.csv'
+    else:
+        CSV_FILE = 'backend/data/delivery.csv'
     # Check if file exists to determine if we need to write the header
     file_exists = os.path.isfile(CSV_FILE)
     
     # Define the order of the columns (must match your JS keys)
-    fieldnames = ['date', 'name', 'phone', 'company', 'po', 'temp', 'cleanliness', 'time']
-    
+    fieldnames = list(data.keys())
+
+
+
     # 'a' means append mode (adds to the end without deleting old data)
     with open(CSV_FILE, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -42,12 +47,12 @@ def handle_form():
         data = request.json
         save_to_csv(data) # Save the data!
         
-        logging.info(f"ENTRY SAVED: Name: {data.get('name')}, Company: {data.get('company')}")
-        #print(f"Success! Entry saved for: {data.get('name')}")
+        logging.info(f"ENTRY SAVED for {data.get('form_type')}: Company: {data.get('company')}")
+        print(f"Success! Entry saved for: {data.get('form_type')}")
         return jsonify({"status": "success", "message": "Thank you, Sign in Complete!"}), 200
     except Exception as e:
         logging.error(f"SYSTEM ERROR: {str(e)}")
-        #print(f"Error saving data: {e}")
+        print(f"Error saving data: {e}")
         return jsonify({"status": "error", "message": "Server error"}), 500
 
 

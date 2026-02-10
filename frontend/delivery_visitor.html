@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Local Form</title>
+    <link rel="stylesheet" href="style_sheet.css">
+</head>
+<body>
+  
+  <div class="form-container">
+    <a href="landing.html" style="text-decoration: none; color: #666;">⬅ Back to Start</a>
+    <h2>Registration</h2>
+    <form id="simpleForm" data-form-type="visitor">
+
+
+    <label for="date">Date / Fecha 📅 </label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="name">Name / Nombre</label>
+      <input type="text" id="name" required />
+
+      <label for="company">Company / Compañia </label>
+      <input type="text" id="company" required />
+
+      <label for="person_to_visit">Who Are you Visiting? / A Quien Visitas? </label>
+      <input type="text" id="person_to_visit" required />
+
+    <label for="time-in">Time In / Hora de Llegada ⏱️</label>
+<input type="time" id="time-in" name="time-in" required />
+
+    <label for="time-out">Time Out / Hora de Salida ⏱️</label>
+<input type="time" id="time-out" name="time-out" required />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
