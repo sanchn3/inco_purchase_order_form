@@ -45,8 +45,9 @@ form.addEventListener('submit', function (e) {
             date: getVal('date'),
             driver_name: getVal('name'),
             phone: getVal('phone_number'),
-            truck_id: getVal('truck_temp'), // or whatever your ID is
+            company: getVal('company'),
             po_number: getVal('purchase_order'),
+            truck_temp: getVal('truck_temp'), // or whatever your ID is
             cleanliness: document.querySelector('input[name="cleanliness"]:checked')?.value || "N/A",
             time: getVal('current-time')
         };

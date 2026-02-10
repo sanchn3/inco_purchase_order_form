@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
 from datetime import datetime
+from plyer import notification
 #import pandas as pd
 import csv
 import os
@@ -47,9 +48,23 @@ def handle_form():
     try:
         data = request.json
         save_to_csv(data) # Save the data!
-        
         logging.info(f"ENTRY SAVED for {data.get('form_type')}: Company: {data.get('company')}")
         print(f"Success! Entry saved for: {data.get('form_type')}")
+        if data.get('form_type') == 'pickup':
+            form_type = data.get('form_type', 'unknown')
+            user_name = data.get('name') or data.get('driver_name') or "A visitor"
+            truck_temp = data.get('truck_temp') 
+            po_number = data.get('po_number') 
+            try:
+                notification.notify(
+                    title= f"{form_type} form Completed!",
+                    message=f"Temperature: {truck_temp} \t PO: {po_number}",
+                    app_name="Logistics Kiosk",
+                    timeout=10 # Stays visible for 10 seconds
+                )
+
+            except Exception as e:
+                print(f"Could not trigger Windows notification: {e}")
         return jsonify({"status": "success", "message": "Thank you, Sign in Complete!"}), 200
     except Exception as e:
         logging.error(f"SYSTEM ERROR: {str(e)}")
