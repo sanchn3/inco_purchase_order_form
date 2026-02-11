@@ -66,7 +66,7 @@ form.addEventListener('submit', function (e) {
     }
 
   // Note the port change to 5000 for Python/Flask
-  fetch('http://192.168.20.117:5000/submit', {
+  fetch('http://192.168.1.125:5000/submit', { //must point to server IPv4 address
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
