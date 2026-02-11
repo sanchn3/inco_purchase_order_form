@@ -3,6 +3,9 @@ const result = document.getElementById('result');
 
 window.onload = function() {
     const dateField = document.getElementById('date');
+    const currentTimeField = document.getElementById('current-time');
+    const timeInField = document.getElementById('time-in');
+
     if (dateField) {
         const today = new Date();
         
@@ -16,6 +19,22 @@ window.onload = function() {
         if (mm < 10) mm = '0' + mm;
 
         dateField.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+
+    if (hours < 10) hours = '0' + hours;
+    if (minutes < 10) minutes = '0' + minutes;
+
+    const formattedTime = `${hours}:${minutes}`;
+
+    if (currentTimeField) {
+      currentTimeField = formattedTime;
+    }
+
+    if (timeInField){
+      timeInField = formattedTime;
     }
 };
 
