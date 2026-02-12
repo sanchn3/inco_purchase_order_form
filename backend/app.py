@@ -40,7 +40,7 @@ def save_to_csv(data):
             
         writer.writerow(data)
 
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['POST', 'GET'])
 def handle_form():
 
 
