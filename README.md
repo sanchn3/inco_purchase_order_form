@@ -26,12 +26,13 @@ A bilingual (English/Spanish) digital kiosk system designed for warehouse and of
 ## 📁 Project Structure
 
 ```text
-├── app.py                  # Flask Backend (Routes data to CSV)
-├── landing.html            # Main Entry Point (The "Choice" Screen)
-├── pickup.html             # Pickup/Outbound Form (Drivers)
-├── delivery_visitor.html   # Delivery/Guest Form (Visitors)
-├── script.js               # Unified Frontend Logic (Data collection & Fetch)
+├── frontend/   
+   ├── landing.html            # Main Entry Point (The "Choice" Screen)
+   ├── pickup.html             # Pickup/Outbound Form (Drivers)
+   ├── delivery_visitor.html   # Delivery/Guest Form (Visitors)
+├── script.js        # Unified Frontend Logic (Data collection & Fetch)
 └── backend/
+    ├── app.py 
     └── data/               # Generated CSV storage
         ├── pickup.csv      # Log: Date, Truck Driver Name, Cell Phone Number, Company, PO, Temp, Cleanliness, Time
         └── delivery.csv    # Log: Date, Visitor Name, Company, Reason, Time in, Time out

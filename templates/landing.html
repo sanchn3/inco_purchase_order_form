@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reception - Sign In</title>
-    <link rel="stylesheet" href="style_sheet_landing.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_sheet_landing.css') }}">
     <img src="assets/logo.jpeg" alt="My Company Logo" class="logo">
 
 </head>
@@ -13,20 +13,20 @@
     <h1>Select Action / Seleccione Acción</h1>
 
     <div class="container">
-        <a href="delivery_visitor.html" class="card">
+        <a href="/visitor" class="card">
             <div class="icon">📦</div>
             <div class="label-main">DELIVERY & VISITOR</div>
             <hr>
             <div class="label-sub">ENTREGA & VISITANTE</div>
         </a>
 
-        <a href="pickup.html" class="card">
+        <a href="/pickup" class="card">
             <div class="icon">🚛</div>
             <div class="label-main">PICKUP / OUTBOUND</div>
             <hr>
             <div class="label-sub">RECOGER / SALIDA</div>
         </a>
     </div>
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

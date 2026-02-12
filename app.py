@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import logging
 from datetime import datetime
@@ -15,6 +15,19 @@ logging.basicConfig(
 
 app = Flask(__name__)
 CORS(app) # This allows your frontend to communicate with this backend
+
+@app.route('/landing')
+def index():
+    return render_template('landing.html')
+
+@app.route('/pickup')
+def pickup_page():
+    return render_template('pickup.html')
+
+@app.route('/visitor')
+def visitor_page():
+    return render_template('delivery_visitor.html')
+
 
 def save_to_csv(data):
 
