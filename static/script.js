@@ -85,7 +85,7 @@ form.addEventListener('submit', function (e) {
     }
 
   // Note the port change to 5000 for Python/Flask
-  fetch('http://192.168.1.125:5000/', { //must point to server IPv4 address
+  fetch('/submit', { //must point to server IPv4 address
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
@@ -95,7 +95,7 @@ form.addEventListener('submit', function (e) {
     result.innerHTML = `<p style="color: green;">${data.message}</p>`;
     form.reset();
   setTimeout(function() {
-            window.location.href = 'landing.html'; // This makes the text vanish
+            window.location.href = '/'; // This makes the text vanish
         }, 3000); // 20000ms = 20 seconds
 
   })

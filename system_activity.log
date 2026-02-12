@@ -1,0 +1,26 @@
+2026-02-12 16:00:41,605 - WARNING -  * Debugger is active!
+2026-02-12 16:00:41,607 - INFO -  * Debugger PIN: 664-810-568
+2026-02-12 16:01:23,810 - INFO -  * Detected change in 'C:\\Users\\sanch\\OneDrive\\Documents\\Documents_Personal\\INCO\\Digital_Era\\PO_MAN_website_input\\app.py', reloading
+2026-02-12 16:01:24,089 - WARNING -  * Debugger is active!
+2026-02-12 16:01:24,090 - INFO -  * Debugger PIN: 664-810-568
+2026-02-12 16:01:28,094 - INFO - 192.168.1.138 - - [12/Feb/2026 16:01:28] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-12 16:01:36,159 - INFO -  * Detected change in 'C:\\Users\\sanch\\OneDrive\\Documents\\Documents_Personal\\INCO\\Digital_Era\\PO_MAN_website_input\\app.py', reloading
+2026-02-12 16:01:36,446 - WARNING -  * Debugger is active!
+2026-02-12 16:01:36,448 - INFO -  * Debugger PIN: 664-810-568
+2026-02-12 16:02:44,176 - INFO - 192.168.1.138 - - [12/Feb/2026 16:02:44] "GET / HTTP/1.1" 200 -
+2026-02-12 16:02:44,221 - INFO - 192.168.1.138 - - [12/Feb/2026 16:02:44] "[33mGET /assets/logo.jpeg HTTP/1.1[0m" 404 -
+2026-02-12 16:02:44,256 - INFO - 192.168.1.138 - - [12/Feb/2026 16:02:44] "[36mGET /static/style_sheet_landing.css HTTP/1.1[0m" 304 -
+2026-02-12 16:02:44,257 - INFO - 192.168.1.138 - - [12/Feb/2026 16:02:44] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2026-02-12 16:02:54,820 - INFO -  * Detected change in 'C:\\Users\\sanch\\OneDrive\\Documents\\Documents_Personal\\INCO\\Digital_Era\\PO_MAN_website_input\\app.py', reloading
+2026-02-12 16:02:55,084 - WARNING -  * Debugger is active!
+2026-02-12 16:02:55,086 - INFO -  * Debugger PIN: 664-810-568
+2026-02-12 16:03:02,703 - INFO - 192.168.1.138 - - [12/Feb/2026 16:03:02] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-12 16:03:04,025 - INFO - 192.168.1.138 - - [12/Feb/2026 16:03:04] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-12 16:03:12,179 - INFO -  * Detected change in 'C:\\Users\\sanch\\OneDrive\\Documents\\Documents_Personal\\INCO\\Digital_Era\\PO_MAN_website_input\\app.py', reloading
+2026-02-12 16:03:12,433 - WARNING -  * Debugger is active!
+2026-02-12 16:03:12,434 - INFO -  * Debugger PIN: 664-810-568
+2026-02-12 16:03:13,683 - INFO - 192.168.1.138 - - [12/Feb/2026 16:03:13] "GET / HTTP/1.1" 200 -
+2026-02-12 16:03:13,726 - INFO - 192.168.1.138 - - [12/Feb/2026 16:03:13] "[33mGET /assets/logo.jpeg HTTP/1.1[0m" 404 -
+2026-02-12 16:03:13,749 - INFO - 192.168.1.138 - - [12/Feb/2026 16:03:13] "[36mGET /static/style_sheet_landing.css HTTP/1.1[0m" 304 -
+2026-02-12 16:03:13,758 - INFO - 192.168.1.138 - - [12/Feb/2026 16:03:13] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2026-02-12 16:03:45,609 - INFO -  * Detected change in 'C:\\Users\\sanch\\OneDrive\\Documents\\Documents_Personal\\INCO\\Digital_Era\\PO_MAN_website_input\\app.py', reloading

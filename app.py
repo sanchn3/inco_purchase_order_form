@@ -16,7 +16,7 @@ logging.basicConfig(
 app = Flask(__name__)
 CORS(app) # This allows your frontend to communicate with this backend
 
-@app.route('/landing')
+@app.route('/')
 def index():
     return render_template('landing.html')
 
@@ -32,9 +32,9 @@ def visitor_page():
 def save_to_csv(data):
 
     if data.get('form_type') == 'pickup':
-        CSV_FILE = 'backend/data/pickup.csv'
+        CSV_FILE = 'data/pickup.csv'
     else:
-        CSV_FILE = 'backend/data/delivery.csv'
+        CSV_FILE = 'data/delivery.csv'
     # Check if file exists to determine if we need to write the header
     file_exists = os.path.isfile(CSV_FILE)
     
