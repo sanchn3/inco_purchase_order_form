@@ -6,9 +6,9 @@ window.onload = function() {
     const currentTimeField = document.getElementById('current-time');
     const timeInField = document.getElementById('time-in');
 
+    const today = new Date();
+
     if (dateField) {
-        const today = new Date();
-        
         // Format as YYYY-MM-DD (which HTML <input type="date"> requires)
         const yyyy = today.getFullYear();
         let mm = today.getMonth() + 1; // Months start at 0
@@ -30,11 +30,11 @@ window.onload = function() {
     const formattedTime = `${hours}:${minutes}`;
 
     if (currentTimeField) {
-      currentTimeField = formattedTime;
+      currentTimeField.value = formattedTime;
     }
 
     if (timeInField){
-      timeInField = formattedTime;
+      timeInField.value = formattedTime;
     }
 };
 
