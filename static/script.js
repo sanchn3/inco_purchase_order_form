@@ -8,6 +8,13 @@ document.addEventListener('input', function (e) {
   }
     });
 
+document.addEventListener('input', function (e) {
+    // ... existing phone logic ...
+
+    if (e.target.id === 'purchase_order') {
+        e.target.value = e.target.value.toUpperCase();
+    }
+});
 
 window.onload = function() {
     const dateField = document.getElementById('date');
