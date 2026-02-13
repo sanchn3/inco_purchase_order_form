@@ -1,7 +1,7 @@
 #Folders
 venv/
 Logs
-backend/data/
+data/
 
 #Files
 backend/system_activity.log

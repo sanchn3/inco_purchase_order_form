@@ -8,7 +8,7 @@ import csv
 import os
 
 logging.basicConfig(
-    filename='backend/system_activity.log',
+    filename='logs/system_activity.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
