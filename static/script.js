@@ -1,6 +1,14 @@
 const form = document.getElementById('simpleForm');
 const result = document.getElementById('result');
 
+document.addEventListener('input', function (e) {
+  if (e.target.id === 'phone_number') {
+      let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+  }
+    });
+
+
 window.onload = function() {
     const dateField = document.getElementById('date');
     const currentTimeField = document.getElementById('current-time');
@@ -55,6 +63,8 @@ form.addEventListener('submit', function (e) {
   // --- FORM 1: PICKUP ---
     if (formType === 'pickup') {
       const phoneInput = document.getElementById('phone_number').value;
+      const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+
     if (!phoneRegex.test(phoneInput)) {
       result.innerHTML = `<p style="color: red;">Error: Phone number must be exactly 10 digits (no dashes or spaces).</p>`;
     return; // Stops the function here so it doesn't send to Python
