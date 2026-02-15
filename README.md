@@ -26,16 +26,25 @@ A bilingual (English/Spanish) digital kiosk system designed for warehouse and of
 ## 📁 Project Structure
 
 ```text
-├── frontend/   
-   ├── landing.html            # Main Entry Point (The "Choice" Screen)
-   ├── pickup.html             # Pickup/Outbound Form (Drivers)
-   ├── delivery_visitor.html   # Delivery/Guest Form (Visitors)
-├── script.js        # Unified Frontend Logic (Data collection & Fetch)
-└── backend/
-    ├── app.py 
-    └── data/               # Generated CSV storage
-        ├── pickup.csv      # Log: Date, Truck Driver Name, Cell Phone Number, Company, PO, Temp, Cleanliness, Time
-        └── delivery.csv    # Log: Date, Visitor Name, Company, Reason, Time in, Time out
+├── data/                      # Generated CSV storage
+   ├── delivery.csv            # Delivery data storage (Visitors)
+   └── pickup.csv              # Pickup data storage (Pickup) 
+├── logs/
+   └── system_activity.log     # Contains the logs for all individual occurences
+├── static/
+   ├── logo.jpeg               # Logo in jpeg form
+   ├── script.js               # Unified Frontend Logic (Data collection & Fetch)
+   ├── style_sheet_landing.css # Landing page stylesheet
+   └── style_sheet.css         # General Stylesheet
+├── templates/
+   ├── delivery_visitor.html   # Delivery/Guest Form (Visitors and Deliveries)
+   ├── landing.html            # Initial Page to choos options 
+   └── pickup.html             # Pickup/Outbound Form (Arriving truck drivers)
+├── .gitignore
+├── app.py                     # Backend logic to run the application
+├── README.md                  # Contains install and set up info of the application
+├── requirements.txt           # Has the installation requirements.txt
+└── run_kiosk.bat              # Used to start application
 ```
 
 ## 🛠 Features & Restrictions

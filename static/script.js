@@ -113,7 +113,7 @@ form.addEventListener('submit', function (e) {
     form.reset();
   setTimeout(function() {
             window.location.href = '/'; // This makes the text vanish
-        }, 3000); // 20000ms = 20 seconds
+        }, 3000); // 30000ms = 30 seconds
 
   })
   .catch(error => {
