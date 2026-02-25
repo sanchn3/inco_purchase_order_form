@@ -1,12 +1,14 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import logging
 from datetime import datetime
+from plyer import notification
+#import pandas as pd
 import csv
 import os
 
 logging.basicConfig(
-    filename='backend/system_activity.log',
+    filename='logs/system_activity.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
@@ -14,12 +16,25 @@ logging.basicConfig(
 app = Flask(__name__)
 CORS(app) # This allows your frontend to communicate with this backend
 
+@app.route('/')
+def index():
+    return render_template('landing.html')
+
+@app.route('/pickup')
+def pickup_page():
+    return render_template('pickup.html')
+
+@app.route('/visitor')
+def visitor_page():
+    return render_template('delivery_visitor.html')
+
+
 def save_to_csv(data):
 
     if data.get('form_type') == 'pickup':
-        CSV_FILE = 'backend/data/pickup.csv'
+        CSV_FILE = 'data/pickup.csv'
     else:
-        CSV_FILE = 'backend/data/delivery.csv'
+        CSV_FILE = 'data/delivery.csv'
     # Check if file exists to determine if we need to write the header
     file_exists = os.path.isfile(CSV_FILE)
     
@@ -38,7 +53,7 @@ def save_to_csv(data):
             
         writer.writerow(data)
 
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['POST', 'GET'])
 def handle_form():
 
 
@@ -46,9 +61,23 @@ def handle_form():
     try:
         data = request.json
         save_to_csv(data) # Save the data!
-        
         logging.info(f"ENTRY SAVED for {data.get('form_type')}: Company: {data.get('company')}")
         print(f"Success! Entry saved for: {data.get('form_type')}")
+        if data.get('form_type') == 'pickup':
+            form_type = data.get('form_type', 'unknown')
+            user_name = data.get('name') or data.get('driver_name') or "A visitor"
+            truck_temp = data.get('truck_temp') 
+            po_number = data.get('po_number') 
+            try:
+                notification.notify(
+                    title= f"{form_type} form Completed!",
+                    message=f"Temperature: {truck_temp} \t PO: {po_number}",
+                    app_name="Logistics Kiosk",
+                    timeout=10 # Stays visible for 10 seconds
+                )
+
+            except Exception as e:
+                print(f"Could not trigger Windows notification: {e}")
         return jsonify({"status": "success", "message": "Thank you, Sign in Complete!"}), 200
     except Exception as e:
         logging.error(f"SYSTEM ERROR: {str(e)}")
@@ -57,4 +86,4 @@ def handle_form():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5000)

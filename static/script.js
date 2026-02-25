@@ -1,11 +1,29 @@
 const form = document.getElementById('simpleForm');
 const result = document.getElementById('result');
 
+document.addEventListener('input', function (e) {
+  if (e.target.id === 'phone_number') {
+      let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+  }
+    });
+
+document.addEventListener('input', function (e) {
+    // ... existing phone logic ...
+
+    if (e.target.id === 'purchase_order') {
+        e.target.value = e.target.value.toUpperCase();
+    }
+});
+
 window.onload = function() {
     const dateField = document.getElementById('date');
+    const currentTimeField = document.getElementById('current-time');
+    const timeInField = document.getElementById('time-in');
+
+    const today = new Date();
+
     if (dateField) {
-        const today = new Date();
-        
         // Format as YYYY-MM-DD (which HTML <input type="date"> requires)
         const yyyy = today.getFullYear();
         let mm = today.getMonth() + 1; // Months start at 0
@@ -16,6 +34,22 @@ window.onload = function() {
         if (mm < 10) mm = '0' + mm;
 
         dateField.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+
+    if (hours < 10) hours = '0' + hours;
+    if (minutes < 10) minutes = '0' + minutes;
+
+    const formattedTime = `${hours}:${minutes}`;
+
+    if (currentTimeField) {
+      currentTimeField.value = formattedTime;
+    }
+
+    if (timeInField){
+      timeInField.value = formattedTime;
     }
 };
 
@@ -36,6 +70,8 @@ form.addEventListener('submit', function (e) {
   // --- FORM 1: PICKUP ---
     if (formType === 'pickup') {
       const phoneInput = document.getElementById('phone_number').value;
+      const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+
     if (!phoneRegex.test(phoneInput)) {
       result.innerHTML = `<p style="color: red;">Error: Phone number must be exactly 10 digits (no dashes or spaces).</p>`;
     return; // Stops the function here so it doesn't send to Python
@@ -45,8 +81,9 @@ form.addEventListener('submit', function (e) {
             date: getVal('date'),
             driver_name: getVal('name'),
             phone: getVal('phone_number'),
-            truck_id: getVal('truck_temp'), // or whatever your ID is
+            company: getVal('company'),
             po_number: getVal('purchase_order'),
+            truck_temp: getVal('truck_temp'), // or whatever your ID is
             cleanliness: document.querySelector('input[name="cleanliness"]:checked')?.value || "N/A",
             time: getVal('current-time')
         };
@@ -65,7 +102,7 @@ form.addEventListener('submit', function (e) {
     }
 
   // Note the port change to 5000 for Python/Flask
-  fetch('http://127.0.0.1:5000/submit', {
+  fetch('/submit', { //must point to server IPv4 address
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
@@ -75,8 +112,8 @@ form.addEventListener('submit', function (e) {
     result.innerHTML = `<p style="color: green;">${data.message}</p>`;
     form.reset();
   setTimeout(function() {
-            window.location.href = 'landing.html'; // This makes the text vanish
-        }, 3000); // 20000ms = 20 seconds
+            window.location.href = '/'; // This makes the text vanish
+        }, 3000); // 30000ms = 30 seconds
 
   })
   .catch(error => {

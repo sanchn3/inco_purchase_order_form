@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000000">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Simple Local Form</title>
-    <link rel="stylesheet" href="style_sheet.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_sheet.css') }}">
 </head>
 <body>
   
   <div class="form-container">
-    <a href="landing.html" style="text-decoration: none; color: #666;">⬅ Back to Start</a>
+    <a href="/" style="text-decoration: none; color: #666;">⬅ Back to Start</a>
     <h2>Registration</h2>
     <form id="simpleForm" data-form-type="visitor">
 
@@ -18,19 +21,19 @@
       <input type="date" id="date" name="date" required />
 
       <label for="name">Name / Nombre</label>
-      <input type="text" id="name" required />
+      <input type="text" id="name" autocomplete="off" required />
 
       <label for="company">Company / Compañia </label>
-      <input type="text" id="company" required />
+      <input type="text" id="company" autocomplete="off" required />
 
       <label for="person_to_visit">Who Are you Visiting? / A Quien Visitas? </label>
-      <input type="text" id="person_to_visit" required />
+      <input type="text" id="person_to_visit" autocomplete="off" required />
 
     <label for="time-in">Time In / Hora de Llegada ⏱️</label>
 <input type="time" id="time-in" name="time-in" required />
 
     <label for="time-out">Time Out / Hora de Salida ⏱️</label>
-<input type="time" id="time-out" name="time-out" required />
+<input type="time" id="time-out" name="time-out" autocomplete="off" required />
 
       <button type="submit">Submit</button>
     </form>
@@ -38,6 +41,6 @@
     <div class="result" id="result"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

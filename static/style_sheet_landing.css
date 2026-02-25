@@ -55,3 +55,9 @@ body {
         }
 
         hr { width: 50px; border: 1px solid #dfe6e9; margin: 10px 0; }
+
+        .logo {
+            height: 100px;   /* control size */
+            width: auto;
+            border-radius: 15px;
+        }
