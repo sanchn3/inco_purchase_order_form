@@ -7,6 +7,32 @@ from plyer import notification
 import csv
 import os
 
+PICKUP_FIELDS   = ['form_type', 'date', 'driver_name', 'phone', 'company', 'po_number', 'truck_temp', 'cleanliness', 'time']
+DELIVERY_FIELDS = ['form_type', 'visitor_name', 'company', 'host_person', 'entry_time', 'exit_time']
+
+
+def read_csv_as_dicts(filepath, fieldnames):
+    if not os.path.isfile(filepath):
+        return []
+    rows = []
+    with open(filepath, newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for i, row in enumerate(reader):
+            if not any(cell.strip() for cell in row):
+                continue  # skip blank lines
+            d = {fn: (row[j] if j < len(row) else '') for j, fn in enumerate(fieldnames)}
+            d['_row_index'] = i
+            rows.append(d)
+    return rows
+
+
+def write_csv(filepath, rows, fieldnames):
+    with open(filepath, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        for row in rows:
+            writer.writerow([row.get(fn, '') for fn in fieldnames])
+
+
 logging.basicConfig(
     filename='logs/system_activity.log',
     level=logging.INFO,
@@ -29,6 +55,67 @@ def visitor_page():
     return render_template('delivery_visitor.html')
 
 
+# --- Admin routes ---
+
+@app.route('/admin')
+def admin_page():
+    return render_template('admin.html')
+
+@app.route('/admin/data')
+def admin_data():
+    pickup   = read_csv_as_dicts('data/pickup.csv',   PICKUP_FIELDS)
+    delivery = read_csv_as_dicts('data/delivery.csv', DELIVERY_FIELDS)
+    return jsonify({'pickup': pickup, 'delivery': delivery})
+
+@app.route('/admin/edit', methods=['POST'])
+def admin_edit():
+    try:
+        body      = request.json
+        file_key  = body['file']        # 'pickup' or 'delivery'
+        row_index = int(body['row_index'])
+        field     = body['field']
+        value     = body['value']
+
+        if file_key == 'pickup':
+            filepath, fieldnames = 'data/pickup.csv', PICKUP_FIELDS
+        else:
+            filepath, fieldnames = 'data/delivery.csv', DELIVERY_FIELDS
+
+        rows = read_csv_as_dicts(filepath, fieldnames)
+        for row in rows:
+            if row['_row_index'] == row_index:
+                row[field] = value
+                break
+
+        write_csv(filepath, rows, fieldnames)
+        logging.info(f"ADMIN EDIT: {file_key} row {row_index} field '{field}' = '{value}'")
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        logging.error(f"ADMIN EDIT ERROR: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/admin/delete', methods=['POST'])
+def admin_delete():
+    try:
+        body      = request.json
+        file_key  = body['file']
+        row_index = int(body['row_index'])
+
+        if file_key == 'pickup':
+            filepath, fieldnames = 'data/pickup.csv', PICKUP_FIELDS
+        else:
+            filepath, fieldnames = 'data/delivery.csv', DELIVERY_FIELDS
+
+        rows = read_csv_as_dicts(filepath, fieldnames)
+        rows = [r for r in rows if r['_row_index'] != row_index]
+        write_csv(filepath, rows, fieldnames)
+        logging.info(f"ADMIN DELETE: {file_key} row {row_index}")
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        logging.error(f"ADMIN DELETE ERROR: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
 def save_to_csv(data):
 
     if data.get('form_type') == 'pickup':
@@ -37,7 +124,7 @@ def save_to_csv(data):
         CSV_FILE = 'data/delivery.csv'
     # Check if file exists to determine if we need to write the header
     file_exists = os.path.isfile(CSV_FILE)
-    
+
     # Define the order of the columns (must match your JS keys)
     fieldnames = list(data.keys())
 
@@ -46,11 +133,11 @@ def save_to_csv(data):
     # 'a' means append mode (adds to the end without deleting old data)
     with open(CSV_FILE, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
-        
+
         # Write the header only once
         if not file_exists:
             writer.writeheader()
-            
+
         writer.writerow(data)
 
 @app.route('/submit', methods=['POST', 'GET'])
@@ -66,8 +153,8 @@ def handle_form():
         if data.get('form_type') == 'pickup':
             form_type = data.get('form_type', 'unknown')
             user_name = data.get('name') or data.get('driver_name') or "A visitor"
-            truck_temp = data.get('truck_temp') 
-            po_number = data.get('po_number') 
+            truck_temp = data.get('truck_temp')
+            po_number = data.get('po_number')
             try:
                 notification.notify(
                     title= f"{form_type} form Completed!",
