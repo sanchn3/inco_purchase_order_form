@@ -2,10 +2,14 @@ from flask import Flask, render_template, request, jsonify, send_file
 from flask_cors import CORS
 import logging
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from plyer import notification
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 #import pandas as pd
 import csv
 import os
+import shutil
 
 PICKUP_FIELDS   = ['form_type', 'date', 'driver_name', 'phone', 'company', 'po_number', 'truck_temp', 'cleanliness', 'time']
 DELIVERY_FIELDS = ['form_type', 'visitor_name', 'company', 'host_person', 'entry_time', 'exit_time']
@@ -180,6 +184,31 @@ def handle_form():
         logging.error(f"SYSTEM ERROR: {str(e)}")
         print(f"Error saving data: {e}")
         return jsonify({"status": "error", "message": "Server error"}), 500
+
+
+def archive_and_clear_csvs():
+    """Runs on the 1st of every month: copies CSVs to data/archives/ then clears them."""
+    archive_dir = 'data/archives'
+    os.makedirs(archive_dir, exist_ok=True)
+
+    # Label archives with the month that just ended
+    prev_month = (datetime.now() - relativedelta(months=1)).strftime('%Y-%m')
+
+    for src, name in [('data/pickup.csv', 'pickup'), ('data/delivery.csv', 'delivery')]:
+        if os.path.isfile(src) and os.path.getsize(src) > 0:
+            dest = os.path.join(archive_dir, f'{name}_{prev_month}.csv')
+            shutil.copy2(src, dest)
+            # Clear the active file
+            open(src, 'w').close()
+            logging.info(f"MONTHLY ARCHIVE: {src} -> {dest}")
+            print(f"Archived {src} to {dest}")
+
+
+# Start the monthly archive scheduler (guard against Flask debug reloader running it twice)
+if not app.debug or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(archive_and_clear_csvs, CronTrigger(day=1, hour=0, minute=0))
+    scheduler.start()
 
 
 if __name__ == '__main__':
