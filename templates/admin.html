@@ -28,7 +28,10 @@
   <div id="panel-pickup" class="panel active">
     <div class="panel-header">
       <span>Pickup entries</span>
-      <span id="pickup-count">0</span>
+      <div class="panel-header-right">
+        <span id="pickup-count">0</span>
+        <a href="/admin/export/pickup" class="btn-export">⬇ Export CSV</a>
+      </div>
     </div>
     <div class="table-wrap">
       <div id="table-pickup"></div>
@@ -39,7 +42,10 @@
   <div id="panel-delivery" class="panel">
     <div class="panel-header">
       <span>Delivery &amp; Visitor entries</span>
-      <span id="delivery-count">0</span>
+      <div class="panel-header-right">
+        <span id="delivery-count">0</span>
+        <a href="/admin/export/delivery" class="btn-export">⬇ Export CSV</a>
+      </div>
     </div>
     <div class="table-wrap">
       <div id="table-delivery"></div>

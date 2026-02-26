@@ -92,6 +92,7 @@ body {
   justify-content: space-between;
 }
 .panel-header span { font-weight: 600; color: #555; font-size: 0.9rem; }
+.panel-header-right { display: flex; align-items: center; gap: 12px; }
 #pickup-count, #delivery-count {
   background: #007bff;
   color: #fff;
@@ -99,6 +100,17 @@ body {
   padding: 2px 10px;
   font-size: 0.8rem;
 }
+.btn-export {
+  background: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.btn-export:hover { background: #0056b3; }
 
 .table-wrap { overflow-x: auto; }
 

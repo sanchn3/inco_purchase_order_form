@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from flask_cors import CORS
 import logging
 from datetime import datetime
@@ -93,6 +93,16 @@ def admin_edit():
     except Exception as e:
         logging.error(f"ADMIN EDIT ERROR: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/admin/export/<file_key>')
+def admin_export(file_key):
+    if file_key == 'pickup':
+        filepath, filename = 'data/pickup.csv', 'pickup.csv'
+    elif file_key == 'delivery':
+        filepath, filename = 'data/delivery.csv', 'delivery.csv'
+    else:
+        return jsonify({'status': 'error', 'message': 'Unknown file'}), 400
+    return send_file(filepath, mimetype='text/csv', as_attachment=True, download_name=filename)
 
 @app.route('/admin/delete', methods=['POST'])
 def admin_delete():
